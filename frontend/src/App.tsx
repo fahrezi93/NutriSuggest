@@ -15,6 +15,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 import ProfileSettings from './components/ProfileSettings';
 import Help from './components/Help';
 import Feedback from './components/Feedback';
+import ErrorBoundary from './components/ErrorBoundary';
 import apiService, { RecommendationResult } from './services/api';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import firestoreService from './services/firestore';
@@ -32,6 +33,14 @@ function AppContent() {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+
+  // Debug logging
+  console.log('AppContent rendered');
+  console.log('Environment variables:', {
+    REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+    REACT_APP_FIREBASE_API_KEY: process.env.REACT_APP_FIREBASE_API_KEY ? 'SET' : 'NOT SET',
+    NODE_ENV: process.env.NODE_ENV
+  });
 
   // Check API connection on component mount
   useEffect(() => {
@@ -474,9 +483,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
