@@ -2,30 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import numpy as np
-import joblib
 import os
-import sys
-
-# Add parent directory to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from ml_models.nutrition_analyzer_improved import ImprovedNutritionAnalyzer
 
 app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'https://your-frontend-domain.vercel.app'], supports_credentials=True)
-
-# Initialize Nutrition Analyzer
-def initialize_nutrition_analyzer():
-    try:
-        analyzer = ImprovedNutritionAnalyzer()
-        print("✅ Nutrition Analyzer initialized successfully")
-        return analyzer
-    except Exception as e:
-        print(f"❌ Error initializing Nutrition Analyzer: {e}")
-        return None
-
-# Initialize analyzer
-nutrition_analyzer = initialize_nutrition_analyzer()
 
 # Load dataset
 def load_dataset():
@@ -264,7 +244,6 @@ def get_health_conditions():
 def health_check():
     return jsonify({
         'status': 'healthy',
-        'nutrition_analyzer': nutrition_analyzer is not None,
         'timestamp': pd.Timestamp.now().isoformat()
     })
 
