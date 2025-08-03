@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Clock, LogOut, User, Menu, X, LogIn, Settings, HelpCircle, MessageSquare, ChevronDown } from 'lucide-react';
+import { Heart, Clock, LogOut, Menu, X, LogIn, Settings, HelpCircle, MessageSquare, ChevronDown } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface HeaderProps {

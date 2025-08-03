@@ -7,7 +7,7 @@ import os
 from ml_models.nutrition_analyzer_improved import ImprovedNutritionAnalyzer
 
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000'], supports_credentials=True)
+CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'https://your-frontend-domain.vercel.app'], supports_credentials=True)
 
 # Initialize Nutrition Analyzer
 def initialize_nutrition_analyzer():
