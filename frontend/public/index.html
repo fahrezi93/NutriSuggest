@@ -44,59 +44,11 @@
       </style>
     </div>
     
-    <!-- Manual script loading for debugging -->
+        <!-- Simple debug script -->
     <script>
       console.log('🔍 HTML loaded successfully');
       console.log('📍 Current URL:', window.location.href);
-      
-      // Try to load React bundle manually
-      const loadReactBundle = () => {
-        const script = document.createElement('script');
-        script.src = './static/js/main.4a5efb0e.js';
-        script.defer = true;
-        
-        script.onload = () => {
-          console.log('✅ React bundle loaded successfully');
-        };
-        
-                  script.onerror = () => {
-            console.error('❌ Failed to load React bundle from ./static/js/main.4a5efb0e.js');
-            // Try alternative path
-            const script2 = document.createElement('script');
-            script2.src = '/static/js/main.4a5efb0e.js';
-          script2.defer = true;
-          
-          script2.onload = () => {
-            console.log('✅ React bundle loaded from alternative path');
-          };
-          
-          script2.onerror = () => {
-            console.error('❌ Failed to load React bundle from both paths');
-            document.getElementById('root').innerHTML = `
-              <div style="padding: 20px; text-align: center; color: red; background: white; border-radius: 10px; margin: 20px;">
-                <h2>⚠️ JavaScript Bundle Loading Error</h2>
-                <p>React application failed to load. This might be due to:</p>
-                <ul style="text-align: left; max-width: 400px; margin: 10px auto;">
-                  <li>Vercel deployment issues</li>
-                  <li>Static assets not found</li>
-                  <li>Build configuration problems</li>
-                </ul>
-                <p><strong>Bundle URL:</strong> /static/js/main.4a5efb0e.js</p>
-                <button onclick="window.location.reload()" style="padding: 10px 20px; margin-top: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                  Try Again
-                </button>
-              </div>
-            `;
-          };
-          
-          document.head.appendChild(script2);
-        };
-        
-        document.head.appendChild(script);
-      };
-      
-      // Load React bundle after a short delay
-      setTimeout(loadReactBundle, 1000);
+      console.log('⏰ Waiting for React to load...');
     </script>
   </body>
 </html> 
