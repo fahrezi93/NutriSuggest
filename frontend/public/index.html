@@ -43,5 +43,36 @@
         }
       </style>
     </div>
+    
+    <!-- Inline JavaScript for debugging -->
+    <script>
+      console.log('🔍 HTML loaded successfully');
+      console.log('📍 Current URL:', window.location.href);
+      console.log('🌍 User Agent:', navigator.userAgent);
+      
+      // Check if React bundle loads
+      setTimeout(() => {
+        console.log('⏰ 5 seconds passed - checking if React loaded...');
+        if (typeof React === 'undefined') {
+          console.error('❌ React not loaded after 5 seconds');
+          document.getElementById('root').innerHTML = `
+            <div style="padding: 20px; text-align: center; color: red; background: white; border-radius: 10px; margin: 20px;">
+              <h2>⚠️ JavaScript Bundle Loading Error</h2>
+              <p>React application failed to load. This might be due to:</p>
+              <ul style="text-align: left; max-width: 400px; margin: 10px auto;">
+                <li>Network connectivity issues</li>
+                <li>Vercel deployment problems</li>
+                <li>JavaScript bundle not found</li>
+              </ul>
+              <button onclick="window.location.reload()" style="padding: 10px 20px; margin-top: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Try Again
+              </button>
+            </div>
+          `;
+        } else {
+          console.log('✅ React loaded successfully');
+        }
+      }, 5000);
+    </script>
   </body>
 </html> 
