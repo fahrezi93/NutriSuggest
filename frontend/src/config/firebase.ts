@@ -13,6 +13,13 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "G-PSPT37424E"
 };
 
+console.log('🔥 Firebase config:', firebaseConfig);
+console.log('🌍 Environment variables:', {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY ? 'SET' : 'NOT SET',
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN ? 'SET' : 'NOT SET',
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID ? 'SET' : 'NOT SET'
+});
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

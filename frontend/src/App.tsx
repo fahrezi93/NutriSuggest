@@ -21,8 +21,11 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import firestoreService from './services/firestore';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import './utils/debug';
 
 function AppContent() {
+  console.log('🚀 AppContent component is rendering...');
+  
   const { currentUser, loading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<RecommendationResult | null>(null);
