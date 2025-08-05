@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import FeaturedFeatures from './components/FeaturedFeatures';
 import Testimonial from './components/Testimonial';
 import HowItWorks from './components/HowItWorks';
 import FoodGallery from './components/FoodGallery';
@@ -16,6 +15,8 @@ import ProfileSettings from './components/ProfileSettings';
 import Help from './components/Help';
 import Feedback from './components/Feedback';
 import ErrorBoundary from './components/ErrorBoundary';
+import FAQ from './components/FAQ';
+import Newsletter from './components/Newsletter';
 import apiService, { RecommendationResult } from './services/api';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import firestoreService from './services/firestore';
@@ -37,13 +38,15 @@ function AppContent() {
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
-  // Debug logging
-  console.log('AppContent rendered');
-  console.log('Environment variables:', {
-    REACT_APP_API_URL: process.env.REACT_APP_API_URL,
-    REACT_APP_FIREBASE_API_KEY: process.env.REACT_APP_FIREBASE_API_KEY ? 'SET' : 'NOT SET',
-    NODE_ENV: process.env.NODE_ENV
-  });
+  // Debug logging - reduced frequency
+  useEffect(() => {
+    console.log('AppContent rendered');
+    console.log('Environment variables:', {
+      REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+      REACT_APP_FIREBASE_API_KEY: process.env.REACT_APP_FIREBASE_API_KEY ? 'SET' : 'NOT SET',
+      NODE_ENV: process.env.NODE_ENV
+    });
+  }, []); // Only log once on mount
 
   // Check API connection on component mount
   useEffect(() => {
@@ -395,10 +398,11 @@ function AppContent() {
               {activeSection === 'hero' && (
                 <>
                   <Hero onGetStarted={handleGetStarted} />
-                  <FeaturedFeatures />
                   <Testimonial />
                   <HowItWorks onGetStarted={handleGetStarted} />
                   <FoodGallery onViewAllFoods={handleGetStarted} />
+                  <FAQ />
+                  <Newsletter onSubscribe={(email) => console.log('Subscribed:', email)} />
                 </>
               )}
               {activeSection === 'recommendation' && (

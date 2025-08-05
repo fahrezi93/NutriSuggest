@@ -1,47 +1,40 @@
-// Debug utility to check environment variables and app state
-export const debugApp = () => {
-  console.log('🔍 === NUTRISUGGEST DEBUG ===');
-  console.log('📍 Current URL:', window.location.href);
-  console.log('🌍 Environment:', process.env.NODE_ENV);
-  console.log('📦 Public URL:', process.env.PUBLIC_URL);
+// Debug utility for development
+if (process.env.NODE_ENV === 'development') {
+  console.log('🔧 Debug mode enabled');
   
   // Check environment variables
-  const envVars = {
-    REACT_APP_API_URL: process.env.REACT_APP_API_URL,
-    REACT_APP_FIREBASE_API_KEY: process.env.REACT_APP_FIREBASE_API_KEY ? 'SET' : 'NOT SET',
-    REACT_APP_FIREBASE_AUTH_DOMAIN: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN ? 'SET' : 'NOT SET',
-    REACT_APP_FIREBASE_PROJECT_ID: process.env.REACT_APP_FIREBASE_PROJECT_ID ? 'SET' : 'NOT SET',
-  };
+  const requiredEnvVars = [
+    'REACT_APP_API_URL',
+    'REACT_APP_FIREBASE_API_KEY',
+    'REACT_APP_FIREBASE_AUTH_DOMAIN',
+    'REACT_APP_FIREBASE_PROJECT_ID'
+  ];
   
-  console.log('🔧 Environment Variables:', envVars);
+  const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
   
-  // Check if React is loaded
-  console.log('⚛️ React loaded:', typeof window !== 'undefined' && 'React' in window);
-  
-  // Check if Firebase is loaded
-  console.log('🔥 Firebase loaded:', typeof window !== 'undefined' && 'firebase' in window);
-  
-  // Check for errors
-  const errors = [];
-  if (!process.env.REACT_APP_FIREBASE_API_KEY) {
-    errors.push('Firebase API Key not set');
-  }
-  if (!process.env.REACT_APP_API_URL) {
-    errors.push('API URL not set');
-  }
-  
-  if (errors.length > 0) {
-    console.error('❌ Errors found:', errors);
+  if (missingEnvVars.length > 0) {
+    console.warn('⚠️ Missing environment variables:', missingEnvVars);
+    console.log('💡 This is normal for local development. The app will work with mock data.');
   } else {
     console.log('✅ All environment variables are set');
   }
   
-  console.log('🔍 === END DEBUG ===');
-};
+  // Expose useful objects to window for debugging
+  (window as any).debug = {
+    // Add any debug utilities here
+    log: (message: string, data?: any) => {
+      console.log(`[DEBUG] ${message}`, data);
+    },
+    error: (message: string, error?: any) => {
+      console.error(`[DEBUG ERROR] ${message}`, error);
+    },
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      API_URL: process.env.REACT_APP_API_URL,
+      FIREBASE_KEY: process.env.REACT_APP_FIREBASE_API_KEY ? 'SET' : 'NOT SET'
+    }
+  };
+}
 
-// Auto-run debug on page load
-if (typeof window !== 'undefined') {
-  window.addEventListener('load', () => {
-    setTimeout(debugApp, 1000); // Wait 1 second for everything to load
-  });
-} 
+// Export empty object to make this a module
+export {}; 

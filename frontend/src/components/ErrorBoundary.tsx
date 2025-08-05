@@ -1,4 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
+import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
@@ -10,47 +11,72 @@ interface State {
 }
 
 class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-  public static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
   }
 
-  public render() {
+  handleRetry = () => {
+    this.setState({ hasError: false, error: undefined });
+  };
+
+  handleGoHome = () => {
+    window.location.href = '/';
+  };
+
+  render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-red-600 mb-4">
-                Something went wrong
-              </h1>
-              <p className="text-gray-600 mb-4">
-                We're sorry, but something went wrong. Please try refreshing the page.
-              </p>
-              {this.state.error && (
-                <details className="text-left">
-                  <summary className="cursor-pointer text-blue-600 mb-2">
-                    Error Details
-                  </summary>
-                  <pre className="bg-gray-100 p-2 rounded text-xs overflow-auto">
-                    {this.state.error.toString()}
-                  </pre>
-                </details>
-              )}
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
+          <div className="max-w-md w-full bg-white rounded-3xl p-8 shadow-2xl text-center">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <AlertTriangle className="w-8 h-8 text-red-600" />
+            </div>
+            
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              Oops! Terjadi Kesalahan
+            </h1>
+            
+            <p className="text-gray-600 mb-6">
+              Maaf, terjadi kesalahan yang tidak terduga. Tim kami telah diberitahu dan sedang memperbaikinya.
+            </p>
+
+            <div className="space-y-3">
               <button
-                onClick={() => window.location.reload()}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                onClick={this.handleRetry}
+                className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors duration-200 font-medium"
               >
-                Refresh Page
+                <RefreshCw className="w-5 h-5" />
+                <span>Coba Lagi</span>
+              </button>
+              
+              <button
+                onClick={this.handleGoHome}
+                className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200 font-medium"
+              >
+                <Home className="w-5 h-5" />
+                <span>Kembali ke Beranda</span>
               </button>
             </div>
+
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <details className="mt-6 text-left">
+                <summary className="text-sm font-medium text-gray-700 cursor-pointer">
+                  Detail Error (Development)
+                </summary>
+                <pre className="mt-2 text-xs text-red-600 bg-red-50 p-3 rounded-lg overflow-auto">
+                  {this.state.error.toString()}
+                </pre>
+              </details>
+            )}
           </div>
         </div>
       );

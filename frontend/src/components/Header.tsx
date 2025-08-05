@@ -117,22 +117,22 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/50">
       <div className="container-max">
-        <div className="flex items-center justify-between py-4 px-4 sm:px-6">
+        <div className="flex items-center justify-between py-3 sm:py-4 px-4 sm:px-6">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-2 sm:space-x-3"
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                <Heart className="w-6 h-6 text-white" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">NutriSuggest</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900">NutriSuggest</h1>
               <p className="text-xs text-gray-500 hidden sm:block">Rekomendasi Makanan Sehat</p>
             </div>
           </motion.div>
